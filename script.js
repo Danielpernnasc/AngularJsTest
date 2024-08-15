@@ -7,7 +7,7 @@ angular.module('cnpjApp', [])
     };
 })
 .controller('CnpjController', function($scope, $http){
-    $scope.editando = false;
+    $scope.editado = false;
 
     $scope.consultarCNPJ = function() {
         const cnpj = $scope.cnpj.replace(/[^0-9]/g, '');
@@ -55,6 +55,7 @@ angular.module('cnpjApp', [])
     };
     
     $scope.resetForm = function() {
+        $scope.editado = false;
         $scope.empresa = {
             nome: '', 
             cnpjEmpr: '',
@@ -101,8 +102,10 @@ angular.module('cnpjApp', [])
     };
 })
 .controller('MainController', function($scope, storageService){
+   
     $scope.resetStorage = function(){
         storageService.resetStorage();
         $scope.resetForm();
+       
     };
 });
