@@ -13,23 +13,27 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body ng-app="cnpjApp" ng-controller="CnpjController">
-    <div ng-controller="MainController">
- 
-            <button ng-click="resetStorage()">Reset</button>
-     
+
+    <div ng-controller="MainController" class="container margintop">
+        <button ng-click="resetStorage()">Reset</button>
     </div>
 
     <div ng-view></div>
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col-md-auto">
-                <h2>Consulta</h2>
+                <div class="row justify-content-md-center">
+                    <div class="col-md-auto">
+                        <h2>Consulta</h2>
+                    </div>
+                </div>
                 <form action="">
                     <input type="text" ng-model="cnpj" placeholder="Digite o CNPJ">
                     <button ng-click="consultarCNPJ()">Consultar</button>
                 </form>
             </div>
         </div>
+        <br><br>
         <div class="row">
             <div class="col-lg-12">
                 <div ng-if="empresa">
@@ -64,7 +68,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <br><br>
                     <div ng-if="editado">
                         <h3>Dados Editados</h3>
                         <div class="row">
