@@ -12,98 +12,131 @@
     <script src="script.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body ng-app="cnpjApp" ng-controller="CnpjController">
+<body ng-app="cnpjApp" >
     <div ng-controller="MainController">
- 
+        <nav>
+            <a href="#!/consulta">Consulta</a>
+            <a href="#!/cadastro">Cadastro</a>
             <button ng-click="resetStorage()">Reset</button>
-     
+        </nav>
+
+        <div ng-view></div>
     </div>
 
-    <div ng-view></div>
-    <div class="container">
-        <div class="row justify-content-md-center">
-            <div class="col-md-auto">
-                <h2>Consulta</h2>
+   
+            <script type="text/ng-template" id="consulta.html">
+                <div class="container">
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-auto">
+                            <h2>Consulta</h2>
+                            <form action="">
+                                <input type="text" ng-model="cnpj" placeholder="Digite o CNPJ">
+                                <button ng-click="consultarCNPJ()">Consultar</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div ng-if="empresa">
+                                <h3>Informações da Empresa</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p>Nome: <input type="text" ng-model="empresa.nome"></p>
+                                        <p>CNPJ: <input type="text" ng-model="empresa.cnpjEmpr" disabled></p>
+                                        <p>Razão Social: <input type="text" ng-model="empresa.razaoSocial"></p>
+                                        <p>Data de Abertura: <input type="text" ng-model="empresa.dataAbertura"></p>
+                                        <p>Situação: <input type="text" ng-model="empresa.situacao"></p>
+                                        <p>Atividade Principal: <input type="text" ng-model="empresa.atividadePrincipal"></p>
+                                        <p>Logradouro: <input type="text" ng-model="empresa.LogradouroEmp"></p>
+                                        <p>Numero: <input type="text" ng-model="empresa.numeroEmp"></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Complemento: <input type="text" ng-model="empresa.complementoEmp"></p>
+                                        <p>Bairro: <input type="text" ng-model="empresa.bairroEmp"></p>
+                                        <p>Cidade: <input type="text" ng-model="empresa.cidadeEmp"></p>
+                                        <p>UF: <input type="text" ng-model="empresa.ufemp"></p>
+                                        <p>CEP: <input type="text" ng-model="empresa.cepEmp"></p>
+                                        <p>Telefone: <input type="text" ng-model="empresa.telEmpresarial"></p>
+                                        <p>E-mail: <input type="text" ng-model="empresa.emailCoorp"></p>
+                                    </div>
+                                    <div class="container">
+                                        <div class="row justify-content-md-center">
+                                            <div class="col-md-3"></div>
+                                            <div class="col-md-auto">
+                                                <button ng-click="salvarEdicao()">Salvar Edição</button>
+                                            </div>
+                                            <div class="col-md-3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div ng-if="editado">
+                                    <h3>Dados Editados</h3>
+                                    <div class="row">
+                                        <div class="col-md-6 result">
+                                            <p>Nome: {{empresa.nome}}</p>
+                                            <p>CNPJ: {{empresa.cnpjEmpr}}/</p>
+                                            <p>Razão Social: {{empresa.razaoSocial}}</p>
+                                            <p>Data de Abertura: {{empresa.dataAbertura}}</p>
+                                            <p>Situação: {{empresa.situacao}}</p>
+                                            <p>Atividade Principal: {{empresa.atividadePrincipal}}</p>
+                                            <p>Logradouro: {{empresa.LogradouroEmp}}</p>
+                                            <p>Numero: {{empresa.numeroEmp}}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>Complemento: {{empresa.complementoEmp}}</p>
+                                            <p>Bairro: {{empresa.bairroEmp}}</p>
+                                            <p>Cidade: {{empresa.cidadeEmp}}</p>
+                                            <p>UF: {{empresa.ufemp}}</p>
+                                            <p>CEP: {{empresa.cepEmp}}</p>
+                                            <p>Telefone: {{empresa.telEmpresarial}} </p>
+                                            <p>E-mail: {{empresa.emailCoorp}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            
+                                <br><br>
+                                <h4>Sócios</h4>
+                                <div  ng-repeat="socio in empresa.socios">
+                                    <p>Nome: <input  type="text"class="col-md-6 border0" ng-model="socio.nome" ></p>
+                                    <p>Qualificação: <input type="text" type="text"class="col-md-8 border0" ng-model="socio.qualificacao"></p>
+                                </div>
+                          
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </script>
+        <script type="text/ng-template" id="cadastro.html">
+            <div class="container">
+                <h2>Cadastro</h2>
                 <form action="">
-                    <input type="text" ng-model="cnpj" placeholder="Digite o CNPJ">
-                    <button ng-click="consultarCNPJ()">Consultar</button>
+                    <div>
+                        <input type="text" ng-model="empresa.nome" placeholder="Nome">
+                        <input type="text" ng-model="empresa.cnpjEmpr" placeholder ="CNPJ">
+                        <input type="text" ng-model="empresa.razaoSocial" placeholder="Razão Social">
+                        <input type="text" ng-model="empresa.dataAbertura" placeholder="Data de Abertura">
+                        <input type="text" ng-model="empresa.situacao" placeholder="Situação">
+                        <input type="text" ng-model="empresa.atividadePrincipal" placeholder="Atividade Principal">
+                    </div>
+                    <div>
+                        <input type="text" ng-model="empresa.LogradouroEmp" placeholder="Rua">
+                        <input type="text" ng-model="empresa.numeroEmp" placeholder="Numero">
+                        <input type="text" ng-model="empresa.complementoEmp" placeholder="Complemento">
+                        <input type="text" ng-model="empresa.bairroEmp" placeholder = "Bairro">
+                        <input type="text" ng-model="empresa.cidadeEmp" placeholder = "Cidade">
+                        <input type="text" ng-model="empresa.UFemp" placeholder="uf">
+                        <input type="text" ng-model="empresa.cepEmp" placeholder="CEP">
+                        <input type="text" ng-model="empresa.telEmpresarial" placeholder="Telefone">
+                        <input type="text" ng-model="empresa.emailCoorp" placeholder="E-mail">
+                    </div>
+                    <br>
+                    <button ng-click="salvar()">Salvar</button>
                 </form>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div ng-if="empresa">
-                    <h3>Informações da Empresa</h3>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p>Nome: <input type="text" ng-model="empresa.nome"></p>
-                            <p>CNPJ: <input type="text" ng-model="empresa.cnpjEmpr" disabled></p>
-                            <p>Razão Social: <input type="text" ng-model="empresa.razaoSocial"></p>
-                            <p>Data de Abertura: <input type="text" ng-model="empresa.dataAbertura"></p>
-                            <p>Situação: <input type="text" ng-model="empresa.situacao"></p>
-                            <p>Atividade Principal: <input type="text" ng-model="empresa.atividadePrincipal"></p>
-                            <p>Logradouro: <input type="text" ng-model="empresa.LogradouroEmp"></p>
-                            <p>Numero: <input type="text" ng-model="empresa.numeroEmp"></p>
-                        </div>
-                        <div class="col-md-6">
-                            <p>Complemento: <input type="text" ng-model="empresa.complementoEmp"></p>
-                            <p>Bairro: <input type="text" ng-model="empresa.bairroEmp"></p>
-                            <p>Cidade: <input type="text" ng-model="empresa.cidadeEmp"></p>
-                            <p>UF: <input type="text" ng-model="empresa.ufemp"></p>
-                            <p>CEP: <input type="text" ng-model="empresa.cepEmp"></p>
-                            <p>Telefone: <input type="text" ng-model="empresa.telEmpresarial"></p>
-                            <p>E-mail: <input type="text" ng-model="empresa.emailCoorp"></p>
-                        </div>
-                        <div class="container">
-                            <div class="row justify-content-md-center">
-                                <div class="col-md-3"></div>
-                                <div class="col-md-auto">
-                                    <button ng-click="salvarEdicao()">Salvar Edição</button>
-                                </div>
-                                <div class="col-md-3"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div ng-if="editado">
-                        <h3>Dados Editados</h3>
-                        <div class="row">
-                            <div class="col-md-6 result">
-                                <p>Nome: {{empresa.nome}}</p>
-                                <p>CNPJ: {{empresa.cnpjEmpr}}/</p>
-                                <p>Razão Social: {{empresa.razaoSocial}}</p>
-                                <p>Data de Abertura: {{empresa.dataAbertura}}</p>
-                                <p>Situação: {{empresa.situacao}}</p>
-                                <p>Atividade Principal: {{empresa.atividadePrincipal}}</p>
-                                <p>Logradouro: {{empresa.LogradouroEmp}}</p>
-                                <p>Numero: {{empresa.numeroEmp}}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p>Complemento: {{empresa.complementoEmp}}</p>
-                                <p>Bairro: {{empresa.bairroEmp}}</p>
-                                <p>Cidade: {{empresa.cidadeEmp}}</p>
-                                <p>UF: {{empresa.ufemp}}</p>
-                                <p>CEP: {{empresa.cepEmp}}</p>
-                                <p>Telefone: {{empresa.telEmpresarial}} </p>
-                                <p>E-mail: {{empresa.emailCoorp}}</p>
-                            </div>
-                        </div>
-                    </div>
-                   
-                
-                    <br><br>
-                    <h4>Sócios</h4>
-                    <div  ng-repeat="socio in empresa.socios">
-                        <p>Nome: <input  type="text"class="col-md-6 border0" ng-model="socio.nome" ></p>
-                        <p>Qualificação: <input type="text" type="text"class="col-md-8 border0" ng-model="socio.qualificacao"></p>
-                    </div>
-              
-                </div>
-            </div>
-        </div>
-    </div>
-            
-           
+        </script>
+ 
 
 
  
