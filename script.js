@@ -3,7 +3,7 @@ angular.module('cnpjApp', [])
 .service('storageService', function() {
     this.resetStorage = function() {
         localStorage.removeItem('dadosEmpresaEditados');
-        alert('Storage resetado com sucesso!');
+        $('#resetModal').modal('show');
     };
 })
 .controller('CnpjController', function($scope, $http){
@@ -44,7 +44,7 @@ angular.module('cnpjApp', [])
     $scope.salvarEdicao = function() {
         $scope.editado = true;
         localStorage.setItem('dadosEmpresaEditados', JSON.stringify($scope.empresa));
-        alert('Dados editados salvos com sucesso no LocalStorage!');
+       
         
         // Resetando o formulário
         $scope.resetForm();
@@ -52,6 +52,7 @@ angular.module('cnpjApp', [])
         // Recupera os dados imediatamente após o reset
         $scope.empresa = JSON.parse(localStorage.getItem('dadosEmpresaEditados'));
         $scope.editado = true;
+        $('#successModal').modal('show');
     };
     
     $scope.resetForm = function() {
@@ -74,6 +75,7 @@ angular.module('cnpjApp', [])
             emailCoorp: '',
             socios: []
         };
+
     };
     
     $scope.carregarDados = function() {
