@@ -48,7 +48,7 @@ angular.module('cnpjApp', [])
         
         // Resetando o formulário
         $scope.resetForm();
-    
+        $scope.botaoResetHabilitado = true;
         // Recupera os dados imediatamente após o reset
         $scope.empresa = JSON.parse(localStorage.getItem('dadosEmpresaEditados'));
         $scope.editado = true;

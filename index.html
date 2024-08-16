@@ -15,7 +15,7 @@
 <body ng-app="cnpjApp" ng-controller="CnpjController">
 
     <div ng-controller="MainController" class="container margintop">
-        <button ng-click="resetStorage()">Reset</button>
+        <button type="button" class="btn btn-secondary" ng-click="resetStorage()" ng-disabled="!botaoResetHabilitado">Reset</button>
     </div>
 
     <div ng-view></div>
@@ -29,7 +29,7 @@
                 </div>
                 <form action="">
                     <input type="text" ng-model="cnpj" placeholder="Digite o CNPJ">
-                    <button ng-click="consultarCNPJ()">Consultar</button>
+                    <button type="button" class="btn btn-primary" ng-click="consultarCNPJ()">Consultar</button>
                 </form>
             </div>
         </div>
@@ -62,7 +62,7 @@
                             <div class="row justify-content-md-center">
                                 <div class="col-md-3"></div>
                                 <div class="col-md-auto">
-                                    <button ng-click="salvarEdicao()">Salvar Edição</button>
+                                    <button type="button" class="btn btn-secondary" ng-click="salvarEdicao()">Salvar Edição</button>
                                 </div>
                                 <div class="col-md-3"></div>
                             </div>
