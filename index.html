@@ -136,7 +136,7 @@
                    
                 
                     <br><br>
-                    <h4>Sócios</h4>
+                    <h4  ng-if="empresa.socios && empresa.socios.length > 0">Sócios</h4>
                     <div  ng-repeat="socio in empresa.socios">
                         <p>Nome: <input  type="text"class="col-md-6 border0" ng-model="socio.nome" ></p>
                         <p>Qualificação: <input type="text" type="text"class="col-md-8 border0" ng-model="socio.qualificacao"></p>
