@@ -1,0 +1,1 @@
+Aqui nos temos um framework em angular ja pronto para rodar eu usei o angular js mesmo não conforme arquitetura foi solicitada  tem um url 
