@@ -1,46 +1,61 @@
 // Definindo o módulo AngularJS
-angular.module('cnpjApp', [])
+angular.module('cnpjApp', ['ui.mask'])
 .service('storageService', function() {
-    this.resetStorage = function() {
+    this.resetStorage = function(showModal) {
         localStorage.removeItem('dadosEmpresaEditados');
-        $('#resetModal').modal('show');
+        
+        if (showModal === 'localStorage') {
+            $('#resetModalLocalStorage').modal('show');
+        } else if (showModal === 'api') {
+            $('#resetModalApi').modal('show');
+        }
     };
+    
 })
+
 .controller('CnpjController', function($scope, $http){
     $scope.editado = false;
 
     $scope.consultarCNPJ = function() {
         const cnpj = $scope.cnpj.replace(/[^0-9]/g, '');
         const url = `https://brasilapi.com.br/api/cnpj/v1/${cnpj}`;
-
+       
+        
+    
         $http.get(url).then(function(response) {
             const data = response.data;
+            const dataAberturaOriginal = data.data_inicio_atividade || '';
+            const dataAberturaFormatada = dataAberturaOriginal ? dataAberturaOriginal.split('-').reverse().join('/') : '';
+          
+    
             $scope.empresa = {
                 nome: data.nome_fantasia || '', 
-                cnpjEmpr: data.cnpj_empresa || '',
+                cnpjEmpr: data.cnpj || '',  // Updated field name
                 razaoSocial: data.razao_social || '',
-                dataAbertura: data.data_abertura || '',
-                situacao: data.descricao_situacao || '',
-                atividadePrincipal: data.atividade_principal || '',
-                LogradouroEmp: data.logradouro || '',
-                numeroEmp: data.logradouro || '',
+                dataAbertura: dataAberturaFormatada,
+                situacao: data.descricao_situacao_cadastral || '',
+                atividadePrincipal: data.cnae_fiscal_descricao || '',
+                LogradouroEmp: data.logradouro|| '',
+                numeroEmp: data.numero || '',
                 complementoEmp: data.complemento || '',
                 bairroEmp: data.bairro || '',
                 cidadeEmp: data.municipio || '',
-                UFemp: data.uf || '',
+                ufemp: data.uf || '',
                 cepEmp: data.cep || '',
-                telEmpresarial : data.telefone_empresarial || '',
-                emailCoorp : data.email_coorporativo || '',
+                telEmpresarial : data.ddd_telefone_1 || '',
+                emailCoorp : data.email || '',
                 socios: data.qsa ? data.qsa.map(socio => ({
                     nome: socio.nome_socio,
                     qualificacao: socio.qualificacao_socio
                 })) : []
             };
+            $scope.botaoResetHabilitado = true;
+          
         }).catch(function(error) {
             console.error('Erro ao consultar o CNPJ:', error);
         });
     };
-
+   
     $scope.salvarEdicao = function() {
         $scope.editado = true;
         localStorage.setItem('dadosEmpresaEditados', JSON.stringify($scope.empresa));
@@ -48,7 +63,6 @@ angular.module('cnpjApp', [])
         
         // Resetando o formulário
         $scope.resetForm();
-        $scope.botaoResetHabilitado = true;
         // Recupera os dados imediatamente após o reset
         $scope.empresa = JSON.parse(localStorage.getItem('dadosEmpresaEditados'));
         $scope.editado = true;
@@ -57,25 +71,7 @@ angular.module('cnpjApp', [])
     
     $scope.resetForm = function() {
         $scope.editado = false;
-        $scope.empresa = {
-            nome: '', 
-            cnpjEmpr: '',
-            razaoSocial: '',
-            dataAbertura: '',
-            situacao: '',
-            atividadePrincipal: '',
-            LogradouroEmp: '',
-            numeroEmp: '',
-            complementoEmp: '',
-            bairroEmp: '',
-            cidadeEmp: '',
-            UFemp: '',
-            cepEmp: '',
-            telEmpresarial: '',
-            emailCoorp: '',
-            socios: []
-        };
-
+        $scope.empresa = false; // Esconder os dados da empresa após o reset
     };
     
     $scope.carregarDados = function() {
@@ -86,28 +82,14 @@ angular.module('cnpjApp', [])
         }
     };
     
-
-    $scope.adicionarSocio = function() {
-        if ($scope.novoSocio && $scope.novoSocio.nome && $scope.novoSocio.qualificacao) {
-            $scope.empresa.socios.push({
-                nome: $scope.novoSocio.nome,
-                qualificacao: $scope.novoSocio.qualificacao
-            });
-            $scope.novoSocio = {}; // Limpar campos após adicionar
-        }
-    };
-
-    $scope.removerSocio = function(index) {
-        if ($scope.empresa.socios && $scope.empresa.socios.length > 0) {
-            $scope.empresa.socios.splice(index, 1);
-        }
-    };
 })
 .controller('MainController', function($scope, storageService){
    
     $scope.resetStorage = function(){
         storageService.resetStorage();
         $scope.resetForm();
+        $scope.empresa = false;
        
     };
 });
+

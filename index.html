@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-mask/1.8.7/mask.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="script.js"></script>
     <link rel="stylesheet" href="styles.css">
@@ -28,8 +29,27 @@
                     </div>
                 </div>
                 <form action="">
-                    <input type="text" ng-model="cnpj" placeholder="Digite o CNPJ">
-                    <button type="button" class="btn btn-primary" ng-click="consultarCNPJ()">Consultar</button>
+                    <div class="row desktop">
+                        <div class="col-sm-8 classPadding" >
+                            <input type="text" ng-model="cnpj"  ui-mask="99.999.999/9999-99">
+                        </div>
+                        <div class="col-sm-4 classPaddingLeft0" >
+                            <button type="button" class="btn btn-primary" ng-click="consultarCNPJ()">Consultar</button>
+                        </div>
+                    </div>
+                    <div class="row mobile">
+                        <div class="col-md-12 classPadding" >
+                            <div class="row justify-content-md-center">
+                                <div class="col-md-auto">
+                                    <input type="text" ng-model="cnpj"  ui-mask="99.999.999/9999-99">
+                                    <button type="button" class="btn btn-primary" ng-click="consultarCNPJ()">Consultar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 classPaddingLeft0" >
+                            
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -55,7 +75,7 @@
                             <p>Cidade: <input type="text" ng-model="empresa.cidadeEmp"></p>
                             <p>UF: <input type="text" ng-model="empresa.ufemp"></p>
                             <p>CEP: <input type="text" ng-model="empresa.cepEmp"></p>
-                            <p>Telefone: <input type="text" ng-model="empresa.telEmpresarial"></p>
+                            <p>Telefone: <input type="text" ng-model="empresa.telEmpresarial" ui-mask="(11) 99999-9999"></p>
                             <p>E-mail: <input type="text" ng-model="empresa.emailCoorp"></p>
                         </div>
                         <div class="container">
@@ -143,7 +163,8 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
+
   
            
 

@@ -9,3 +9,21 @@
 .margintop{
     margin-top: 50px;
 }
+
+.classPadding{
+    padding: 4px 10px;
+}
+.classPaddingLeft0{
+    padding-left: 0;
+}
+
+@media (max-width: 500px) {
+    .desktop {
+        display: none;
+    }
+}
+@media (min-width: 600px){
+    .mobile {
+        display: none;
+    }
+}
