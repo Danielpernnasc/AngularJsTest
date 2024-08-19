@@ -1,3 +1,26 @@
+html, body {
+    height: 100%; /* Garantir que o HTML e o body ocupem a altura total */
+    margin: 0;    /* Remover margens padrão */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1; /* Permite que o conteúdo ocupe o espaço restante disponível */
+}
+
+.footer {
+    background-color: #007bff; /* Cor de fundo do footer, substitua conforme necessário */
+    color: #fff; /* Cor do texto do footer */
+    text-align: center; /* Centraliza o texto */
+    padding: 1rem; /* Espaçamento interno */
+    ;
+}
+
+
 .formulario {
     display: flex;
 }
@@ -27,3 +50,4 @@
         display: none;
     }
 }
+
