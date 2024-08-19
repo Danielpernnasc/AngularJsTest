@@ -56,12 +56,27 @@
                             <button type="button" class="btn btn-primary" ng-click="consultarCNPJ()">Consultar</button>
                         </div>
                     </div>
+                    <div class="row desktop">
+                        <div class="col-sm-12 classPadding" >
+                            <div ng-if="errorMessage" class="alert alert-danger" role="alert">
+                                {{ errorMessage }}
+                            </div>
+                        </div>
+                       
+                    </div>
                     <div class="row mobile">
                         <div class="col-md-12 classPadding" >
                             <div class="row justify-content-md-center">
                                 <div class="col-md-auto">
                                     <input type="text" ng-model="cnpj"  ui-mask="99.999.999/9999-99">
                                     <button type="button" class="btn btn-primary" ng-click="consultarCNPJ()">Consultar</button>
+                                </div>
+                            </div>
+                            <div class="row justify-content-md-center">
+                                <div class="col-md-auto">
+                                    <div ng-if="errorMessage" class="alert alert-danger" role="alert">
+                                        {{ errorMessage }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -181,6 +196,26 @@
         </div>
         </div>
     </div>
+    <!-- Modal -->
+<div id="errorModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="errorModalLabel">Erro</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="errorMessage">CNPJ inválido ou não encontrado.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
     <footer class="footer">
         <p class="mb-0">© 2024 Minha Empresa. Todos os direitos reservados.</p>
     </footer>

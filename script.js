@@ -20,10 +20,17 @@ angular.module('cnpjApp', ['ui.mask'])
         const cnpj = $scope.cnpj.replace(/[^0-9]/g, '');
         const url = `https://brasilapi.com.br/api/cnpj/v1/${cnpj}`;
        
-        
+        if (cnpj.length !== 14) {
+            $scope.errorMessage = 'CNPJ inválido. O CNPJ deve ter 14 dígitos.';
+            return;
+        }
     
         $http.get(url).then(function(response) {
             const data = response.data;
+            if (!data || !data.cnpj || data.cnpj !== cnpj) {
+                alert('CNPJ não encontrado ou inválido.');
+                return;
+            }
             const dataAberturaOriginal = data.data_inicio_atividade || '';
             const dataAberturaFormatada = dataAberturaOriginal ? dataAberturaOriginal.split('-').reverse().join('/') : '';
             const dataCNPJAPI = data.cnpj || '';
@@ -58,7 +65,13 @@ angular.module('cnpjApp', ['ui.mask'])
           
         }).catch(function(error) {
             console.error('Erro ao consultar o CNPJ:', error);
+             // Exibir modal com mensagem de erro
+             if (error.status === 400) {
+                $scope.errorMessage = error.data.message || 'CNPJ inválido ou não encontrado.';
+                $('#errorModal').modal('show');
+            }
         });
+        
     };
    
     $scope.salvarEdicao = function() {
