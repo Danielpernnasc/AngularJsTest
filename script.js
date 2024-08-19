@@ -19,7 +19,8 @@ angular.module('cnpjApp', ['ui.mask'])
     $scope.consultarCNPJ = function() {
         const cnpj = $scope.cnpj.replace(/[^0-9]/g, '');
         const url = `https://brasilapi.com.br/api/cnpj/v1/${cnpj}`;
-       
+        console.log(url, 'a url'); // Verifique o console para a URL correta
+
         if (cnpj.length !== 14) {
             $scope.errorMessage = 'CNPJ inválido. O CNPJ deve ter 14 dígitos.';
             return;
@@ -27,6 +28,7 @@ angular.module('cnpjApp', ['ui.mask'])
     
         $http.get(url).then(function(response) {
             const data = response.data;
+            console.log(response.data); // Verifique a resposta no console
             if (!data || !data.cnpj || data.cnpj !== cnpj) {
                 alert('CNPJ não encontrado ou inválido.');
                 return;
