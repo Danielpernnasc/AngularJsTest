@@ -26,11 +26,16 @@ angular.module('cnpjApp', ['ui.mask'])
             const data = response.data;
             const dataAberturaOriginal = data.data_inicio_atividade || '';
             const dataAberturaFormatada = dataAberturaOriginal ? dataAberturaOriginal.split('-').reverse().join('/') : '';
-          
+            const dataCNPJAPI = data.cnpj || '';
+            function formatCNPJ(cnpj) {
+                return cnpj
+                    .replace(/\D/g, '') // Remove caracteres não numéricos
+                    .replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5'); // Aplica a máscara
+            }
     
             $scope.empresa = {
                 nome: data.nome_fantasia || '', 
-                cnpjEmpr: data.cnpj || '',  // Updated field name
+                cnpjEmpr: formatCNPJ(dataCNPJAPI), // Aplica a formatação correta
                 razaoSocial: data.razao_social || '',
                 dataAbertura: dataAberturaFormatada,
                 situacao: data.descricao_situacao_cadastral || '',
